@@ -1,0 +1,98 @@
+from pprint import pprint
+from docx import Document
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
+from pdfminer.pdfpage import PDFPage
+from io import StringIO
+
+import constants as cs
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from spacy.matcher import Matcher
+
+
+
+
+
+
+# For education details
+#
+# STOPWORDS = set(stopwords.words('english'))
+#
+# # Education Degrees
+# EDUCATION = [
+#     'BE', 'B.E.', 'B.E', 'BS', 'B.S',
+#     'ME', 'M.E', 'M.E.', 'MS', 'M.S',
+#     'BTECH', 'B.TECH', 'M.TECH', 'MTECH',
+#     'SSC', 'HSC', 'CBSE', 'ICSE', 'X', 'XII'
+# ]
+#
+#
+# def extract_education(resume_text):
+#     nlp_text = nlp(resume_text)
+#
+#     # Sentence Tokenizer
+#     nlp_text = [sent.string.strip() for sent in nlp_text.sents]
+#
+#     edu = {}
+#     # Extract education degree
+#     for index, text in enumerate(nlp_text):
+#         for tex in text.split():
+#             # Replace all special symbols
+#             tex = re.sub(r'[?|$|.|!|,]', r'', tex)
+#             if tex.upper() in EDUCATION and tex not in STOPWORDS:
+#                 edu[tex] = text + nlp_text[index + 1]
+#
+#     # Extract year
+#     education = []
+#     for key in edu.keys():
+#         year = re.search(re.compile(r'(((20|19)(\d{2})))'), edu[key])
+#         if year:
+#             education.append((key, ''.join(year[0])))
+#         else:
+#             education.append(key)
+#     print(education)
+#
+#
+# print("Education Details")
+# extract_education(my_text)
+
+# For Experience Extraction
+#
+# def extract_experience(resume_text):
+#     '''
+#     Helper function to extract experience from resume text
+#     :param resume_text: Plain resume text
+#     :return: list of experience
+#     '''
+#     wordnet_lemmatizer = WordNetLemmatizer()
+#     stop_words = set(stopwords.words('english'))
+#
+#     # word tokenization
+#     word_tokens = nltk.word_tokenize(resume_text)
+#
+#     # remove stop words and lemmatize
+#     filtered_sentence = [w for w in word_tokens if
+#                          not w in stop_words and wordnet_lemmatizer.lemmatize(w) not in stop_words]
+#     sent = nltk.pos_tag(filtered_sentence)
+#
+#     # parse regex
+#     cp = nltk.RegexpParser('P: {<NNP>+}')
+#     cs = cp.parse(sent)
+#
+#     # for i in cs.subtrees(filter=lambda x: x.label() == 'P'):
+#     #     print(i)
+#
+#     test = []
+#
+#     for vp in list(cs.subtrees(filter=lambda x: x.label() == 'P')):
+#         test.append(" ".join([i[0] for i in vp.leaves() if len(vp.leaves()) >= 2]))
+#
+#     # Search the word 'experience' in the chunk and then print out the text after it
+#     x = [x[x.lower().index('experience') + 10:] for i, x in enumerate(test) if x and 'experience' in x.lower()]
+#     print(x)
+#
+#
+# extract_experience(pdf_text)
+#
